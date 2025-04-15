@@ -1,0 +1,36 @@
+import unittest
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.action_chains import ActionChains
+import time
+import pdb
+
+
+class TestAccountSetting(unittest.TestCase):
+    def setUp(self):
+        self.driver = webdriver.Chrome()
+
+    def test_acoount_setting(self):
+        driver = self.driver
+        driver.get('https://eklipse.gg/')
+        driver.maximize_window()
+        self.assertIn('', self.driver.title)
+        menu = driver.find_element(By.XPATH, '/html/body/header/div/div/div[3]/a[1]')
+        menu.click()
+        time.sleep(10)
+        driver.find_element(By.ID, 'username').send_keys('ahmadizulkarnain@ymail.com')
+        driver.find_element(By.NAME, 'password').send_keys('youtube123')
+        log_in = driver.find_element(By.CSS_SELECTOR, '#app > div > div > div > div.section-login.min-vh-100.col-12.col-lg-5 > div > div:nth-child(3) > form > div.form-group.text-center > button')
+        log_in.click()
+        time.sleep(10)
+        driver.find_element(By.CLASS_NAME, 'ic-user').click()
+        AccSetting = driver.find_element(By.CSS_SELECTOR, '#dashboard > div.ek-dashboard > div > header > div > div.navigation.d-flex.show-desktop > ul:nth-child(7) > li > div > button:nth-child(5)')
+        action = ActionChains(driver)
+        action.move_to_element(AccSetting).perform()
+        AccSetting.click()
+        time.sleep(2)
+
+if __name__ == "__main__":
+    unittest.main()
